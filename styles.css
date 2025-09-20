@@ -292,18 +292,18 @@ body {
     text-align: center;
 }
 
-.data-collection h3 {
+.data-collection h3, .policy h3, .results-section h3 {
     font-size: 1.5rem;
     font-weight: 600;
     color: #1f2937;
-    margin-bottom: 0;
+    margin-bottom: 0.25rem;
+}
+
+h3 {
+    margin-bottom: 0.25rem;
 }
 
 .policy h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 0;
     text-align: left;
 }
 
@@ -635,7 +635,7 @@ body {
 }
 
 .results-section {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .results-section h3 {
@@ -652,7 +652,8 @@ body {
 .results-text p {
     font-size: 1.125rem;
     color: #4b5563;
-    margin-bottom: 2rem;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
     line-height: 1.7;
     text-align: justify;
 }
@@ -696,7 +697,8 @@ body {
 
 .hardware-results {
     display: grid;
-    gap: 3rem;
+    gap: 1rem;
+    margin-top: 0;
 }
 
 @media (min-width: 1024px) {
@@ -709,7 +711,8 @@ body {
 .hardware-text p {
     font-size: 1.125rem;
     color: #4b5563;
-    margin-bottom: 2rem;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
     line-height: 1.7;
     text-align: justify;
 }
@@ -747,16 +750,22 @@ body {
 }
 
 .ablation-study {
-    border: 1px solid #e5e7eb;
-    padding: 1.5rem;
-    margin: 2rem 0;
+    margin: 1rem 0;
 }
 
 .ablation-study h3 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: #1f2937;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.ablation-study p {
+    font-size: 1rem;
+    color: #4b5563;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    text-align: justify;
 }
 
 .ablation-table {
@@ -972,10 +981,10 @@ button:focus {
 /* Image Styles */
 .deployment-image {
     width: 100%;
-    max-width: 700px;
+    max-width: 1400px;
     height: auto;
     border: 1px solid #e5e7eb;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .disturbance-image {
@@ -987,12 +996,12 @@ button:focus {
 }
 
 .results-visual {
-    margin: 2rem 0;
+    margin: 1rem 0;
     text-align: center;
 }
 
 .hardware-visual {
-    margin: 2rem 0;
+    margin: 1rem 0;
     text-align: center;
 }
 

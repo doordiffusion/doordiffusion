@@ -145,36 +145,19 @@
                             coordinated skills, including reaching for the handle, twisting it, pulling the door, coordinating both arms, and 
                             synchronizing manipulation with locomotion.
                         </p>
-                        <div class="results-highlights">
-                            <div class="highlight">
-                                <div class="highlight-icon">✓</div>
-                                <div class="highlight-text">
-                                    <strong>100% Success Rate</strong>
-                                    <span>With separate encoders vs 0% with unified encoder</span>
-                                </div>
-                            </div>
-                            <div class="highlight">
-                                <div class="highlight-icon">⚡</div>
-                                <div class="highlight-text">
-                                    <strong>Optimized Inference</strong>
-                                    <span>Reduced from 100 to 10 denoising steps without performance loss</span>
-                                </div>
-                            </div>
-                            <div class="highlight">
-                                <div class="highlight-icon">🎯</div>
-                                <div class="highlight-text">
-                                    <strong>Superior Performance</strong>
-                                    <span>Outperformed ACT (8/10) and SmolVLA (0/10) baselines</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="results-visual">
                         <img src="images/actionOverTime.png" alt="Policy Deployment Comparison" class="deployment-image">
-                        <p class="figure-caption">Policy deployment comparison between simulation and hardware. Shows synchronized state and action trajectories with colored bands indicating key behavioral stages.</p>
                     </div>
                 </div>
             </div>
+            
+            <!-- Ablation Study -->
+            <h3>Ablation Study</h3>
+            <p>
+                We conducted an ablation study on our proposed policy and additionally trained ACT and SmolVLA as baselines for comparison as shown in Table. II. Each policy was trained for 100k steps, with evaluations performed every 20k steps. During each evaluation, the policy was executed 10 times, and we report the best-performing trial.
+            </p>
+            <img src="images/simresults.png" alt="Simulation Results Table" class="results-table-image">
 
             <!-- Hardware Results -->
             <div class="results-section">
@@ -189,16 +172,8 @@
                     </div>
                     <div class="hardware-visual">
                         <img src="images/disturbance.png" alt="Disturbance Recovery Sequence" class="disturbance-image">
-                        <p class="figure-caption">Policy under external disturbance during door opening. Shows the robot's ability to detect changes and re-initiate the opening sequence when the door is manually re-closed.</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Ablation Study -->
-            <div class="ablation-study">
-                <h3>Ablation Study</h3>
-                <img src="images/simresults.png" alt="Simulation Results Table" class="results-table-image">
-                <p class="figure-caption">Simulation results comparing different policy configurations and baselines. Our diffusion policy with separate encoders achieves 100% success rate.</p>
             </div>
         </div>
     </section>
