@@ -292,6 +292,21 @@ body {
     text-align: center;
 }
 
+.data-collection h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0;
+}
+
+.policy h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0;
+    text-align: left;
+}
+
 .abstract-content {
     max-width: 4xl;
     margin: 0 auto;
@@ -328,12 +343,6 @@ body {
     margin: 0;
 }
 
-.data-collection h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 0;
-}
 
 .teleop-main-image {
     width: 100%;
@@ -586,7 +595,7 @@ body {
 .policy-content {
     display: grid;
     gap: 2rem;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
 @media (min-width: 1024px) {
@@ -600,6 +609,7 @@ body {
     font-size: 1rem;
     color: #4b5563;
     margin-bottom: 1rem;
+    margin-top: 1.5rem;
     line-height: 1.6;
     text-align: justify;
 }
@@ -620,7 +630,7 @@ body {
 
 /* Results Section */
 .results {
-    padding: 0.5rem 0;
+    padding: 1rem 0;
     background: white;
 }
 
