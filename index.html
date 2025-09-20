@@ -33,7 +33,7 @@
             <div class="hero-content">
             <h1 class="hero-title">Diffusion Policy for Coordinated Control of a Nonholonomic Mobile Base and Dual Arms in Door Opening and Passing</h1>
                 <div class="hero-meta">
-                    <span>Author 1, Author 2, Author 3</span>
+                    <span>Author 1, Author 2, Author 3, ...</span>
                 </div>
             </div>
             
@@ -49,20 +49,6 @@
                 </div>
             </div>
             
-            <div class="hero-actions">
-                <a href="#" class="btn-primary">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                    </svg>
-                    arXiv Paper
-                </a>
-                <a href="#" class="btn-secondary">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                    </svg>
-                    Source Code
-                </a>
-            </div>
         </div>
     </section>
 
@@ -72,8 +58,9 @@
             <h2 class="section-title">Abstract</h2>
             <div class="abstract-content">
                 <p>
-                    Opening heavy, self-closing doors---especially those that require pulling---remains a long-standing challenge in robotics. Humans naturally employ both arms in a dexterous manner---rotating the handle, widening the gap, holding the door, switching arms when needed, and moving through while maintaining clearance. To replicate such behaviors, a robot must perform a long sequence of motions spanning multiple stages and interactions with different parts of the door. Traditional approaches rely on state machines that transition between manually defined stages (e.g., pulling after the knob is rotated, passing after the gap is sufficiently wide). While intuitive, these methods lack robustness, as hand-crafted trajectories fail to generalize to the diversity of real-world conditions without extensive engineering effort. Recent advances in imitation learning offer a scalable alternative, yet no existing visual-action model has demonstrated simultaneous coordination of a nonholonomic base and dual arms for the complete door opening and passing task. In this paper, we tackle this complex, highly constrained problem using a diffusion-based visuomotor control policy. Our results demonstrate that a single end-to-end policy can be learned to execute long-horizon tasks requiring tight coordination between manipulation and locomotion. The resulting policy not only achieves a high success rate in opening and traversing damped pull doors but also demonstrates strong robustness to external disturbances---capabilities that are difficult to realize with traditional methods.
+                    Opening heavy, self-closing doors—especially those that require pulling—remains a long-standing challenge in robotics. Humans naturally employ both arms in a dexterous manner—rotating the handle, widening the gap, holding the door, switching arms when needed, and moving through while maintaining clearance. To replicate such behaviors, a robot must perform a long sequence of motions spanning multiple stages and interactions with different parts of the door. Traditional approaches rely on state machines that transition between manually defined stages (e.g., pulling after the knob is rotated, passing after the gap is sufficiently wide). While intuitive, these methods lack robustness, as hand-crafted trajectories fail to generalize to the diversity of real-world conditions without extensive engineering effort. Recent advances in imitation learning offer a scalable alternative, yet no existing visual-action model has demonstrated simultaneous coordination of a nonholonomic base and dual arms for the complete door opening and passing task. In this paper, we tackle this complex, highly constrained problem using a diffusion-based visuomotor control policy. Our results demonstrate that a single end-to-end policy can be learned to execute long-horizon tasks requiring tight coordination between manipulation and locomotion. The resulting policy not only achieves a high success rate in opening and traversing damped pull doors but also demonstrates strong robustness to external disturbances—capabilities that are difficult to realize with traditional methods.
                 </p>
+                <img src="images/hdsf.png" alt="Diffusion-based Door Opening and Traversal Policy" class="abstract-image">
             </div>
         </div>
     </section>
@@ -83,115 +70,60 @@
         <div class="container">
             <h2 class="section-title">Method</h2>
             
-            <!-- System Overview -->
-            <div class="method-overview">
-                <div class="method-content">
-                    <h3>System Overview</h3>
+            <!-- A. Data Collection -->
+            <div class="data-collection">
+                <h3>I. Data Collection</h3>
+                
+                <img src="images/dataCollect.png" alt="Hardware Specifications and Data Collection" class="teleop-main-image">
+                
+                <div class="data-collection-content">
+                    <div class="data-collection-text">
+                        <div class="simulation-section">
+                            <div class="simulation-text">
+                                <h4>Simulation</h4>
+                                <p>
+                                    To collect data in simulation, we use a state-based controller that combines inverse kinematics (IK) for door manipulation with model predictive control (MPC) for base motion. To better approximate human-like behavior, rather than directly performing joint-level control with the IK solution, we developed a scheduler that gradually guides the robot in the task-space toward the desired joint configuration found by the IK. To enhance realism and variability, we randomize lighting conditions as well as door and handle colors across episodes, thereby reflecting the natural diversity of real-world environments.
+                                </p>
+                                
+                                <p>
+                                    In both hardware and simulation, we generated 100 demonstration trajectories. To prevent the policies from overfitting to a single motion pattern, we additionally randomize the robot's initial base pose (dx, dy, and dyaw). The robot base is placed at a random lateral distance of 0.90±0.03m with longitudinal offset of ±0.03m, and yaw of ±1.00 rad.
+                                </p>
+                            </div>
+                            
+                            <div class="simulation-image">
+                                <img src="images/ik_MPC.png" alt="IK and MPC Controller" class="ik-mpc-image">
+                            </div>
+                        </div>
+                        
+                        <h4>Hardware</h4>
+                        <p>
+                            For collecting expert demonstrations on hardware, we use the teleoperation kit provided by Realman, which has the same joint configuration as the target robot. We collect image data from three independent cameras capturing RGB images of shape 180×240 pixels. During teleoperation, the robot's joint positions and images from all three cameras are recorded as the state, while the joint positions commanded through the teleoperation kit are stored as actions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Policy and Hyperparameters Section -->
+    <section id="policy" class="policy">
+        <div class="container">
+            <h2 class="section-title">II. Policy and Hyperparameters</h2>
+            
+            <div class="policy-content">
+                <div class="policy-text">
                     <p>
-                        Our diffusion-based door opening and traversal policy integrates perception, manipulation, and base coordination 
-                        into a single end-to-end system. The policy learns from expert demonstrations collected through both teleoperation 
-                        and simulation.
+                        Our diffusion-based policy architecture consists of three independent ResNet-18 encoders for multi-view perception and a 1D U-Net with FiLM conditioning for action generation. The policy operates with a prediction horizon of 16 steps and generates action sequences of length 8, using stacked observations from the last 3 timesteps.
                     </p>
-                    <div class="method-steps">
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <h4>Multi-view Perception</h4>
-                                <p>Three independent ResNet-18 encoders process RGB images from different viewpoints</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <h4>Diffusion Policy</h4>
-                                <p>1D U-Net with FiLM conditioning generates smooth action sequences</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <h4>Dual-arm Coordination</h4>
-                                <p>Tight coordination between manipulation and nonholonomic base movement</p>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    <p>
+                        The diffusion process uses 100 forward diffusion steps during training, which are reduced to 10 steps during inference for computational efficiency. This approach enables the policy to learn smooth, coordinated actions while maintaining robustness to the complex dynamics of door opening and traversal tasks.
+                    </p>
                 </div>
-                <div class="method-visual">
-                    <img src="images/model.png" alt="Diffusion Policy Architecture" class="architecture-image">
-                    <p class="figure-caption">Diffusion Policy Architecture. The system uses three ResNet-18 encoders for multi-view perception and a 1D U-Net with FiLM conditioning for action generation.</p>
-                </div>
-            </div>
-
-            <!-- Data Collection & Architecture -->
-            <div class="method-details">
-                <div class="detail-card">
-                    <h3>Data Collection</h3>
-                    <img src="images/dataCollect.png" alt="Hardware Specifications and Data Collection" class="detail-image">
-                    <ul>
-                        <li>Teleoperation with RealMan dual-arm platform</li>
-                        <li>Simulation with MuJoCo physics engine</li>
-                        <li>Domain randomization for robustness</li>
-                        <li>100 demonstration trajectories</li>
-                    </ul>
-                </div>
-                <div class="detail-card">
-                    <h3>Policy Architecture</h3>
-                    <ul>
-                        <li>Three independent ResNet-18 encoders</li>
-                        <li>1D U-Net with FiLM conditioning</li>
-                        <li>16-step prediction horizon</li>
-                        <li>100 denoising steps (10 at inference)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Task Setting -->
-            <div class="task-setting">
-                <h3>Task Setting and Initial Pose Randomization</h3>
-                <img src="images/init.png" alt="Task Setting Diagram" class="task-setting-image">
-                <p class="figure-caption">Initial pose randomization setup. The robot base is placed at a random lateral distance of 0.90±0.03m with longitudinal offset of ±0.03m, and yaw of ±1.00 rad.</p>
-            </div>
-
-            <!-- Key Sequence -->
-            <div class="key-sequence">
-                <h3>Key Sequence of Door Opening</h3>
-                <div class="sequence-steps">
-                    <div class="sequence-step">
-                        <div class="sequence-icon reaching">
-                            <svg width="32" height="32" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <h4>Reaching</h4>
-                        <p>Approach door handle</p>
-                    </div>
-                    <div class="sequence-step">
-                        <div class="sequence-icon twisting">
-                            <svg width="32" height="32" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <h4>Twisting</h4>
-                        <p>Rotate door handle</p>
-                    </div>
-                    <div class="sequence-step">
-                        <div class="sequence-icon pulling">
-                            <svg width="32" height="32" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <h4>Pulling</h4>
-                        <p>Open door gap</p>
-                    </div>
-                    <div class="sequence-step">
-                        <div class="sequence-icon traversing">
-                            <svg width="32" height="32" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <h4>Traversing</h4>
-                        <p>Pass through door</p>
-                    </div>
+                
+                <div class="policy-images">
+                    <img src="images/model.png" alt="Policy Architecture" class="model-image">
+                    <img src="images/hyperparameters.png" alt="Hyperparameters Table" class="hyperparameters-image">
                 </div>
             </div>
         </div>
@@ -254,27 +186,6 @@
                             Notably, the learned policy demonstrated robustness to disturbances: when the door was manually re-closed during 
                             execution, the policy responded by halting further extension and re-initiating the opening sequence.
                         </p>
-                        <div class="disturbance-demo">
-                            <h4>Disturbance Recovery</h4>
-                            <div class="disturbance-steps">
-                                <div class="disturbance-step">
-                                    <div class="step-label">Prior</div>
-                                    <p>Robot grasps and begins to pull the door</p>
-                                </div>
-                                <div class="disturbance-step">
-                                    <div class="step-label">Disturbance</div>
-                                    <p>Door is manually re-closed during execution</p>
-                                </div>
-                                <div class="disturbance-step">
-                                    <div class="step-label">Correction</div>
-                                    <p>Policy halts extension and re-adjusts posture</p>
-                                </div>
-                                <div class="disturbance-step">
-                                    <div class="step-label">Continue</div>
-                                    <p>Robot successfully resumes and completes task</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="hardware-visual">
                         <img src="images/disturbance.png" alt="Disturbance Recovery Sequence" class="disturbance-image">
@@ -286,42 +197,8 @@
             <!-- Ablation Study -->
             <div class="ablation-study">
                 <h3>Ablation Study</h3>
-                <div class="ablation-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Policy</th>
-                                <th>Success Rate</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Diffusion (unified encoder, 100 steps)</td>
-                                <td>0/10</td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td>Diffusion (separate encoder, 100 steps)</td>
-                                <td>10/10</td>
-                            </tr>
-                            <tr>
-                                <td>Diffusion (separate encoder, 30 steps)</td>
-                                <td>10/10</td>
-                            </tr>
-                            <tr>
-                                <td>Diffusion (separate encoder, 20 steps)</td>
-                                <td>9/10</td>
-                            </tr>
-                            <tr>
-                                <td>ACT</td>
-                                <td>8/10</td>
-                            </tr>
-                            <tr>
-                                <td>SmolVLA</td>
-                                <td>0/10</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <img src="images/simresults.png" alt="Simulation Results Table" class="results-table-image">
+                <p class="figure-caption">Simulation results comparing different policy configurations and baselines. Our diffusion policy with separate encoders achieves 100% success rate.</p>
             </div>
         </div>
     </section>
@@ -335,40 +212,10 @@
                     Our study demonstrates that diffusion-based visuomotor policies can achieve reliable performance on the challenging 
                     task of opening and traversing damped pull doors using a dual-arm mobile manipulator. Unlike prior approaches that 
                     rely on state machines or heavily engineered perception pipelines, our method learns a unified policy that integrates 
-                    perception, manipulation, and base coordination directly from demonstration data.
+                    perception, manipulation, and base coordination directly from demonstration data. The results show that diffusion 
+                    policies not only generate long-horizon trajectories but also exhibit robustness to disturbances and environmental 
+                    variability, a critical capability for real-world deployment.
                 </p>
-                <p>
-                    The results show that diffusion policies not only generate long-horizon trajectories but also exhibit robustness to 
-                    disturbances and environmental variability, a critical capability for real-world deployment. This represents the 
-                    first single policy that enables a mobile manipulator to successfully open and traverse a damped pull door.
-                </p>
-                
-                <div class="contributions">
-                    <h3>Key Contributions</h3>
-                    <div class="contribution-list">
-                        <div class="contribution">
-                            <div class="contribution-number">1</div>
-                            <div class="contribution-text">
-                                <h4>Stage-based Trajectory Generation</h4>
-                                <p>Pipeline combining inverse kinematics and model predictive control with randomized test scenarios</p>
-                            </div>
-                        </div>
-                        <div class="contribution">
-                            <div class="contribution-number">2</div>
-                            <div class="contribution-text">
-                                <h4>Image-to-Action Coordination</h4>
-                                <p>Diffusion policy controller with optimized configuration balancing complexity and inference time</p>
-                            </div>
-                        </div>
-                        <div class="contribution">
-                            <div class="contribution-number">3</div>
-                            <div class="contribution-text">
-                                <h4>Real Robot Validation</h4>
-                                <p>Experimental validation demonstrating robustness through recovery behaviors using only vision and proprioception</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
