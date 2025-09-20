@@ -253,6 +253,16 @@ body {
     color: #d1d5db;
 }
 
+.demo-video {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    margin: 0 auto;
+    display: block;
+}
+
 .hero-actions {
     display: flex;
     flex-wrap: wrap;
@@ -818,6 +828,15 @@ h3 {
     margin-bottom: 1.5rem;
     line-height: 1.7;
     text-align: justify;
+}
+
+.conclusion-image {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    border: 1px solid #e5e7eb;
+    margin: 1rem auto;
+    display: block;
 }
 
 .contributions {
